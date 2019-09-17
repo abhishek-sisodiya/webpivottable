@@ -6,5 +6,5 @@ COPY ./ .
 # stage 2
 FROM nginx:alpine
 COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY --from=node /app/dist/index.html /usr/share/nginx/html
+COPY --from=node /app/dist /usr/share/nginx/html
 # CMD [ "npm", "start" ]
