@@ -293,16 +293,16 @@
     <h3 style="text-align: center;margin:0;">Test wpt component</h3>
     <div>
 
-      1. Load dummy csv file from git
+      1. Load dummy data from myjson.com
       <select id="report">
-        <option value="" selected disabled hidden>Load File</option>
+        <option value="" selected disabled hidden>Load JSON</option>
         <option value="https://api.myjson.com/bins/ms9ld">
           from
-          git</option>
+          myjson</option>
       </select>
 
       <br>
-      2. Select Category in rows for default so that table won't look empty (in actual we will select year)
+      2. Select year to show in columns
       <select id="column">
         <option value="" selected disabled hidden>Add column</option>
         <!-- <option value="years">years</option> -->
@@ -310,18 +310,16 @@
         <option value="2019">2019</option>
       </select>
       <br>
-      3. Save the changes as JSON to POST myjson.com API and store the URL in storage
+      3. Save the changes as JSON (POST myjson.com API) and store the URL in storage
       <button id="save">SAVE JSON</button>
       <br>
       4. Reload
       <button id="reload">RELOAD</button>
       <br>
-      5. Load saved changes by calling get myjson.com API (URL from storage)
+      5. Load saved changes by calling (GET myjson.com API & URL from storage)
       <button id="load">LOAD JSON</button>
-
-
       <br>
-      2. Select Category in rows for default so that table won't look empty (in actual we will select year)
+      6. Select another year to add in columns
       <select id="anothercolumn">
         <option value="" selected disabled hidden>Add column</option>
         <!-- <option value="years">years</option> -->
@@ -329,6 +327,7 @@
         <option value="2019">2019</option>
       </select>
       <br>
+      Save it & load it.
     </div>
   </div>
 
