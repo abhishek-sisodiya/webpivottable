@@ -119,8 +119,8 @@
       //   }
       // });
 
-      $('#table_content').hide();
-      $('#column').hide();
+      // $('#table_content').hide();
+      // $('#column').hide();
 
       $('#report').on('change', function () {
         var value = this.value;
@@ -152,49 +152,81 @@
         var value = this.value;
         if (value) {
           var wpt = $('web-pivot-table')[0];
-          wpt.generateWptJSON(false).then(function (wptObj) {
-            wptObj.sheet.pivot.columns.push("years");
-            wptObj.sheet.pivot.rows.push("category");
-
-            var x = {
-              fieldId: "price",
-              format: { category: "NUMBER", negative: "RED_MINUS" },
-              category: "NUMBER",
-              negative: "RED_MINUS",
-              id: "1801369653589",
-              name: "price(Sum)",
-              stats: "SUM"
-            }
-            wptObj.sheet.pivot.values.push(x);
-
-            // filter = { filterType: "LABEL", filterLabelType: "INCLUDES", filterLabelIncludes: x }
-
-            filter = { filterType: "LABEL", filterLabelType: "INCLUDES", filterLabelIncludes: [value] }
-            wptObj.sheet.pivot.fields = { "years": { filter, "id": "years" } };
 
 
-            // wptObj.sheet.pivot.fields.years.filter.filterLabelIncludes.push(value);
+          if (value == "2018") {
+            wpt.setWptFromWebService("https://api.myjson.com/bins/woxvd");
 
-            wpt.setWpt(wptObj).then(function (response) {
-              $('#table_content').show();
+            // $.get("https://api.myjson.com/bins/13yfg9", function (data, textStatus, jqXHR) {
+            //   var json = JSON.stringify(data);
+            //   wpt.setWpt(json).then(function (response) {
+            //     $('#table_content').show();
+            //   });
+            // });
+          } else if (value == "2019") {
+            wpt.setWptFromWebService("https://api.myjson.com/bins/n606x");
+
+            //   $.get("https://api.myjson.com/bins/19hrdl", function (data, textStatus, jqXHR) {
+            //     var json = JSON.stringify(data);
+            //     wpt.setWpt(json).then(function (response) {
+            //       $('#table_content').show();
+            //     });
+            //   });
+          }
+
+          setTimeout(function () {
+            wpt.generateWptJSON(false).then(function (wptObj) {
+              wptObj.sheet.pivot.columns.push("years");
+              wptObj.sheet.pivot.rows.push("category");
+
+              console.log(wptObj);
+              
+
+              var x = {
+                fieldId: "price",
+                format: { category: "NUMBER", negative: "RED_MINUS" },
+                category: "NUMBER",
+                negative: "RED_MINUS",
+                id: "1801369653589",
+                name: "price(Sum)",
+                stats: "SUM"
+              }
+              wptObj.sheet.pivot.values.push(x);
+
+              // filter = { filterType: "LABEL", filterLabelType: "INCLUDES", filterLabelIncludes: x }
+
+              filter = { filterType: "LABEL", filterLabelType: "INCLUDES", filterLabelIncludes: [value] }
+              wptObj.sheet.pivot.fields = { "years": { filter, "id": "years" } };
+
+
+              // wptObj.sheet.pivot.fields.years.filter.filterLabelIncludes.push(value);
+
+              wpt.setWpt(wptObj).then(function (response) {
+                $('#table_content').show();
+              });
             });
-          });
+          }, 2000);
+
+            
+       
+
         }
-      });
 
-      $('#anothercolumn').on('change', function (e) {
-        var value = this.value;
-        var wpt = $('web-pivot-table')[0];
-        wpt.generateWptJSON(false).then(function (wptObj) {
-          wptObj.sheet.pivot.fields.years.filter.filterLabelIncludes.push(value.toString());
-          console.log(wptObj);
-          wpt.setWpt(wptObj).then(function (response) {
-              // $('#table_content').show();
-            });
-        });
-     
+
 
       });
+
+      // $('#anothercolumn').on('change', function (e) {
+      //   var value = this.value;
+      //   var wpt = $('web-pivot-table')[0];
+      //   wpt.generateWptJSON(false).then(function (wptObj) {
+      //     wptObj.sheet.pivot.fields.years.filter.filterLabelIncludes.push(value.toString());
+      //     console.log(wptObj);
+      //     wpt.setWpt(wptObj).then(function (response) {
+      //         // $('#table_content').show();
+      //       });
+      //   });
+
 
       $('#save').on('click', function () {
         var data
@@ -287,7 +319,7 @@
   </script>
 
 </head>
-  
+
 <body>
   <div style="padding:10px;">
     <h3 style="text-align: center;margin:0;">Test wpt component</h3>
@@ -296,7 +328,7 @@
       1. Load dummy data from myjson.com
       <select id="report">
         <option value="" selected disabled hidden>Load JSON</option>
-        <option value="https://api.myjson.com/bins/ms9ld">
+        <option value="https://api.myjson.com/bins/woxvd">
           from
           myjson</option>
       </select>
@@ -319,13 +351,13 @@
       5. Load saved changes by calling (GET myjson.com API & URL from storage)
       <button id="load">LOAD JSON</button>
       <br>
-      6. Select another year to add in columns
-      <select id="anothercolumn">
-        <option value="" selected disabled hidden>Add column</option>
-        <!-- <option value="years">years</option> -->
-        <option value="2018">2018</option>
+      <!-- 6. Select another year to add in columns
+      <select id="column">
+        <option value="" selected disabled hidden>Add column</option> -->
+      <!-- <option value="years">years</option> -->
+      <!-- <option value="2018">2018</option>
         <option value="2019">2019</option>
-      </select>
+      </select> -->
       <br>
       Save it & load it.
     </div>
